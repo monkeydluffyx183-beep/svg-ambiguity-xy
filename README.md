@@ -1,9 +1,17 @@
 # svg-ambiguity-xy
 
-**An independent, specification-only implementation of the format-matched control** —
-the method behind [svg-ambiguity-bench](https://github.com/NITISH-R-G/svg-ambiguity-bench),
-written from its [`SPEC.md`](https://github.com/NITISH-R-G/svg-ambiguity-bench/blob/master/src/fmtcontrol/SPEC.md)
-and conformance vectors without reading the reference code.
+Two things, built on each other:
+
+1. **`fmtcontrol_xy`** — an independent, specification-only implementation of the
+   format-matched control, the method behind
+   [svg-ambiguity-bench](https://github.com/NITISH-R-G/svg-ambiguity-bench), written from its
+   [`SPEC.md`](https://github.com/NITISH-R-G/svg-ambiguity-bench/blob/master/src/fmtcontrol/SPEC.md)
+   and conformance vectors without reading the reference code. Level 2 conformant.
+2. **`xybench`** — that benchmark's SVG reference-resolution study rebuilt on **real chart
+   SVGs exported by the [XY](https://github.com/reflex-dev/xy) charting library**, in two
+   renderings of the same 30 charts: coordinates masked (upstream's information gap on
+   real markup) and coordinates legible. Frozen corpus, pre-registration draft, model
+   runner for Ollama and OpenAI-compatible endpoints. **No model has been run yet.**
 
 [![CI](https://github.com/monkeydluffyx183-beep/svg-ambiguity-xy/actions/workflows/ci.yml/badge.svg)](https://github.com/monkeydluffyx183-beep/svg-ambiguity-xy/actions/workflows/ci.yml)
 
@@ -12,7 +20,9 @@ values most and cannot produce itself, because *"it tests whether the specificat
 actually sufficient — a claim the author cannot check, having written both."* This
 repository is that test, for Python, with the answer and the caveats written down.
 
-## Result
+## Part 1 — `fmtcontrol_xy`
+
+### Result
 
 | | |
 |---|---|
@@ -31,14 +41,14 @@ which bits `getrandbits` keeps, are not stated, and most natural alternatives re
 the vectors at all. None of this is a defect in the method; all of it is fixable with a
 few sentences.
 
-## What this repository is not
+### What part 1 is not
 
 It ran **no models** and makes **no empirical claims**. The study results, pre-registration,
 DOI and provenance in upstream's README belong to upstream; nothing here reproduces or
 disputes them. This is an implementation of the instrument, not a replication of the
 measurement.
 
-## Try it — no install
+### Try it — no install
 
 ```bash
 git clone https://github.com/monkeydluffyx183-beep/svg-ambiguity-xy
@@ -53,10 +63,10 @@ validation checks, and shows the three-way decomposition under three determinist
 solvers — including a **pure format effect** that a two-arm comparison would report as
 information, and the **sorted-entity-order trap** from SPEC §6b that no check can catch.
 
-## Use it
+### Use it
 
 ```bash
-pip install -e ".[dev]" && python -m pytest    # 698 tests, ~3 s
+pip install -e ".[dev]" && python -m pytest    # 775 tests, ~8 s (698 for part 1)
 ```
 
 ```python
@@ -77,7 +87,7 @@ raises `NoControlError` instead of handing back a copy of the treatment (SPEC I9
 
 Or just copy `src/fmtcontrol_xy/{mt19937,control}.py` — two files, standard library only.
 
-## Layout
+### Layout
 
 ```
 src/fmtcontrol_xy/
@@ -93,15 +103,67 @@ tests/
   test_stdlib_only.py        no third-party imports, and no `random`
 examples/ops_table_control.py
 SPEC_NOTES.md                the conformance report and every place the spec forced a guess
+
+src/xybench/                 part 2 — corpus · predicates · instructions · prompt · scoring · solvers · stats · report · audit · cli
+data/frozen/<hash>/          the frozen corpus: 60 SVGs, cases, geometry, rejections, certificate
+docs/xybench/                DESIGN · PREREGISTRATION · RUNBOOK
+results/                     audit output and reference-solver report at freeze
+tests/bench/                 77 tests for part 2 (two need XY; they skip without it)
 ```
 
-## Reporting upstream
+### Reporting upstream
 
 The first half of [`SPEC_NOTES.md`](SPEC_NOTES.md) follows upstream's
 `independent-implementation` issue template and can be pasted into
 [a new issue there](https://github.com/NITISH-R-G/svg-ambiguity-bench/issues/new?template=independent-implementation.md)
 as-is. Its last section is a note on the §6b sorted-table corollary, offered for the
 proofs review upstream also solicits.
+
+## Part 2 — `xybench`: the study on real XY charts
+
+Upstream's limitations open with *"One synthetic corpus. Opaque geometry tokens that do not
+occur in real SVGs."* `xybench` addresses that sentence: the same three-arm design, on SVGs
+that a charting library actually emits.
+
+```
+<circle id="e2ee9009d" cx="80.23" cy="51.26" r="3.5" fill="#8c5a3c" fill-opacity="0.8"/>   real
+<circle id="e2ee9009d" cx="{{GEOM_23810120}}" cy="{{GEOM_32405f3c}}" r="3.5" fill="#8c5a3c" fill-opacity="0.8"/>   masked
+```
+
+Real markup changes the question. In XY's output the position *is* in the text, so
+"make the top-left marker blue" is no longer a reference the document cannot support — it
+is two numbers per element. Rather than pick, the corpus is written twice: `masked`
+recreates upstream's information gap byte-for-byte on real markup; `real` leaves the
+coordinates in. Everything else — ids, order, instructions, context tables, the permutation
+— is identical, so `real − masked` per condition measures what legible coordinates are
+worth.
+
+| | |
+|---|---|
+| Corpus | 30 single-series XY scatter charts, K ∈ {4..7} identical markers, **180 cases × 2 variants**, ground truth from rendered pixels with a 24 px margin, frozen at `data/frozen/9344ea07…` with a per-file certificate; regenerates bit-exactly from its seed under `xy==0.0.7` (CI checks) |
+| Conditions | `baseline` · `enhanced` (id, centre_x, centre_y in document order) · `permuted` (via `fmtcontrol_xy`, same shuffle in both variants) · `named_id` |
+| Predicates / operations | 8 spatial predicates; recolor, stroke, delete, resize |
+| Scoring | upstream's outcome classes plus **`REFUSED_PROSE`** — the FA-013 fix: a prose refusal is no longer `MALFORMED`. Primary metric: *exclusive* identification (target changed, nothing else); upstream's inclusive definition reported alongside |
+| Inference | cluster bootstrap over charts, paired cluster permutation, MDE fixed in advance |
+| Validated | 23 audit checks with no model, including seven deterministic solvers through the whole scorer (`oracle` 1.000, `random` ≈ 0.19, `first` shows up as a spike in the selection-position table) |
+
+```bash
+python -m xybench status                        # protocol identity
+python -m xybench audit                         # 23 checks, ~3 s, no model, no XY needed
+python -m xybench prompt --variant masked --condition permuted --case xy000-04
+
+python -m xybench run --variant masked --condition enhanced --solver ollama --model qwen2.5-coder:3b
+python -m xybench evaluate experiments/* && python -m xybench report experiments/*
+```
+
+Read, in this order: [`docs/xybench/DESIGN.md`](docs/xybench/DESIGN.md) (what and why,
+what differs from upstream, threats), [`docs/xybench/PREREGISTRATION.md`](docs/xybench/PREREGISTRATION.md)
+(hypotheses, primary comparison, falsifiers — written before any model output exists, and
+how to tag the freeze), [`docs/xybench/RUNBOOK.md`](docs/xybench/RUNBOOK.md) (running it).
+`results/audit.txt` and `results/reference-solvers.md` are the instrument's state at freeze.
+
+The corpus depends on XY's exact SVG serialisation, so `xy==0.0.7` is pinned in the `bench`
+extra (Python ≥ 3.11); scoring and reporting need only the standard library on 3.9+.
 
 ## Attribution and licence
 
@@ -110,5 +172,9 @@ The specification, the conformance vectors and the method are the work of Nitish
 (SHA-256 `cea747eeee90456b5326c1022696fefcd7709d0fb15a746b265d9e3299807be9`, upstream
 commit `305ae55`); the pinned hash is asserted by the tests so it cannot drift silently.
 See [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
+
+XY (`xy` on PyPI) is by the Reflex team, Apache-2.0; it is a build-time dependency of the
+corpus and is not redistributed. The frozen SVGs under `data/frozen/` are XY exports with
+ids inserted.
 
 Everything else in this repository is original and MIT licensed — see [`LICENSE`](LICENSE).

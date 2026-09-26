@@ -1,0 +1,39 @@
+{
+  "per_chart": {
+    "xy000": 0,
+    "xy001": 0,
+    "xy002": 0,
+    "xy003": 0,
+    "xy004": 0,
+    "xy005": 0,
+    "xy006": 0,
+    "xy007": 0,
+    "xy008": 0,
+    "xy009": 0,
+    "xy010": 0,
+    "xy011": 0,
+    "xy012": 0,
+    "xy013": 0,
+    "xy014": 1,
+    "xy015": 0,
+    "xy016": 0,
+    "xy017": 0,
+    "xy018": 0,
+    "xy019": 0,
+    "xy020": 1,
+    "xy021": 0,
+    "xy022": 1,
+    "xy023": 0,
+    "xy024": 0,
+    "xy025": 0,
+    "xy026": 0,
+    "xy027": 0,
+    "xy028": 0,
+    "xy029": 0
+  },
+  "reasons": {
+    "only 3 of 8 predicates unique with margin": 1,
+    "only 5 of 8 predicates unique with margin": 2
+  },
+  "total": 3
+}
