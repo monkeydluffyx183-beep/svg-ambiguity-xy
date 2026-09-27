@@ -82,3 +82,55 @@ def test_report_handles_a_single_experiment(corpus, tmp_path):
     text = build_report(corpus, [("solo", rows)])
     assert "no comparable arm pairs" in text
     assert "| real | baseline | first | 180 |" in text
+
+
+def test_cli_run_against_a_fake_ollama_server(corpus, tmp_path, capsys):
+    """The path a real run takes: CLI -> backend -> store -> evaluate, with the backend's
+    finish reason and options recorded. The fake server behaves like a model that returns
+    the document from the prompt unchanged, so every case scores NO_EDIT."""
+    import json as _json
+    import re
+    import threading
+    from http.server import BaseHTTPRequestHandler, HTTPServer
+
+    seen = []
+
+    class Fake(BaseHTTPRequestHandler):
+        def log_message(self, *a):
+            pass
+
+        def do_POST(self):
+            body = _json.loads(self.rfile.read(int(self.headers["Content-Length"])))
+            seen.append(body)
+            prompt = body["messages"][0]["content"]
+            svg = re.search(r"<svg\b.*?</svg\s*>", prompt, re.DOTALL).group(0)
+            data = _json.dumps({"message": {"role": "assistant", "content": "Here you go:\n" + svg},
+                                "done_reason": "stop", "eval_count": 5, "prompt_eval_count": 1000}).encode()
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(data)))
+            self.end_headers()
+            self.wfile.write(data)
+
+    httpd = HTTPServer(("127.0.0.1", 0), Fake)
+    threading.Thread(target=httpd.serve_forever, daemon=True).start()
+    try:
+        c = str(frozen_corpus_dir())
+        exps = tmp_path / "experiments"
+        rc = main(["run", "--corpus", c, "--experiments", str(exps), "--variant", "masked", "--condition", "enhanced",
+                   "--solver", "ollama", "--model", "fake:1b", "--host", f"http://127.0.0.1:{httpd.server_port}",
+                   "--max-tokens", "777", "--num-ctx", "4096", "--limit", "6"])
+    finally:
+        httpd.shutdown()
+    assert rc == 0
+    exp = exps / "masked-enhanced-fake_1b"
+    manifest = json.loads((exp / "manifest.json").read_text())
+    assert manifest["backend"] == {"backend": "ollama", "model": "fake:1b", "host": f"http://127.0.0.1:{httpd.server_port}",
+                                   "max_tokens": 777, "num_ctx": 4096, "seed": 0, "temperature": 0}
+    assert len(seen) == 6 and seen[0]["options"]["num_predict"] == 777 and seen[0]["stream"] is False
+    rows = [json.loads(l) for l in (exp / "responses.jsonl").read_text().splitlines()]
+    assert len(rows) == 6 and all(r["finish_reason"] == "stop" and r["meta"]["eval_count"] == 5 for r in rows)
+    assert all(r["prompt_sha256"] and r["latency_ms"] >= 0 for r in rows)
+    evaluated = evaluate_experiment(corpus, exp)
+    assert [e["outcome"] for e in evaluated] == ["NO_EDIT"] * 6
+    assert all(e["model"] == "fake:1b" and e["variant"] == "masked" for e in evaluated)

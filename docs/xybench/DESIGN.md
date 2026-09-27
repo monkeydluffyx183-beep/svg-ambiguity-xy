@@ -86,8 +86,11 @@ coordinate string present in the document, or the document fill.
 over every file's path and hash); `manifest.json` lists every file with its hash, the
 config, the generator version and the **XY version**, because the corpus is a function of
 XY's serialisation. `xybench verify` checks the certificate; `--regenerate` rebuilds from
-the seed and compares hashes (CI does this on three Python versions). Tampering with one
-byte is detected; that is the only sense in which "frozen" is verifiable from the outside.
+the seed and compares hashes. The frozen hash has reproduced on the machine that built it,
+on a fresh sandbox, and on GitHub-hosted Ubuntu runners under Python 3.11, 3.12 and 3.13
+from a clean `pip install xy==0.0.7` (CI run 36258808572); CI repeats that check on every
+push. Tampering with one byte is detected; that is the only sense in which "frozen" is
+verifiable from the outside.
 
 ## 3. Arms
 
