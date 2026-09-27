@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  fmtcontrol:
+    name: fmtcontrol_xy + xybench (no XY) · py${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # The things the README promises work on a bare interpreter, checked bare.
+      - name: Conformance vectors (no install)
+        run: PYTHONPATH=src python -m fmtcontrol_xy.conformance
+      - name: Example (no install)
+        run: python examples/ops_table_control.py
+      - name: xybench audit against the frozen corpus (no install, no XY)
+        run: PYTHONPATH=src python -m xybench audit
+
+      - name: Install with test extras
+        run: python -m pip install -e ".[dev]"
+      - name: Tests (XY-dependent tests skip)
+        run: python -m pytest
+
+  corpus:
+    name: xybench corpus regeneration with XY · py${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install with bench extras
+        run: python -m pip install -e ".[dev,bench]"
+      - name: Protocol identity
+        run: python -m xybench status
+      - name: Tier 3 — the frozen corpus is a deterministic function of its seed
+        run: python -m xybench verify --regenerate
+      - name: Full test suite including regeneration
+        run: python -m pytest tests/bench

@@ -1,0 +1,296 @@
+{
+  "config": {
+    "cases_per_chart": 6,
+    "height": 480,
+    "k_max": 7,
+    "k_min": 4,
+    "margin_px": 24.0,
+    "marker_size": 7.0,
+    "max_attempts_per_chart": 60,
+    "max_cases_per_target": 2,
+    "n_charts": 30,
+    "palette": [
+      "#2f6f9f",
+      "#8c5a3c",
+      "#4f8a4f",
+      "#8a4f7d"
+    ],
+    "seed": 20260926,
+    "title": "Observations",
+    "width": 720,
+    "x_range": [
+      0.0,
+      100.0
+    ],
+    "y_range": [
+      0.0,
+      50.0
+    ]
+  },
+  "config_hash": "eb4fdbf5958f0fc77b96480cb47e5c9f5a56e622dc6cb3bd6810092f0ef7ad00",
+  "dataset_hash": "9344ea07056f508eb719705ac7c12e1fc5e6a20eaf3966d5c2c6c8709974cc80",
+  "files": [
+    {
+      "path": "cases.jsonl",
+      "sha256": "61d96971d47d27024ae4b784c62217d9b99342ce3d1c80bd429f42c8abec51e3"
+    },
+    {
+      "path": "charts/xy000.masked.svg",
+      "sha256": "8a9718bdb3c7d83f9738634a80a8b50c5abd50c0a00421d11ca49fde1b38146d"
+    },
+    {
+      "path": "charts/xy000.real.svg",
+      "sha256": "42e26f9df8d5d54b0ed842f430952682aa35732331683825d7f200f7968ff1a9"
+    },
+    {
+      "path": "charts/xy001.masked.svg",
+      "sha256": "e2daaa03ab4d63b8e67a35cd71d7760084b63ec85d23e3871128b9e339a7c7f7"
+    },
+    {
+      "path": "charts/xy001.real.svg",
+      "sha256": "31ed316b9dfe584792a55ab67eed396e406eb3e9677ce9cae508a56839a95267"
+    },
+    {
+      "path": "charts/xy002.masked.svg",
+      "sha256": "41682a6b2ef0fd56cab6abf787a2d90ac7995217c2438f0d1d504eb9d6dff0d4"
+    },
+    {
+      "path": "charts/xy002.real.svg",
+      "sha256": "b0d1514d3bed667587d6be644ff00ce79a944f92dc71e81cdf41a07f47e53785"
+    },
+    {
+      "path": "charts/xy003.masked.svg",
+      "sha256": "bff0eeb681631f3dd63256f7362a4afa52e000a514be00578eb888bfdd0a6db6"
+    },
+    {
+      "path": "charts/xy003.real.svg",
+      "sha256": "98d0283a8024b789f40e0974cad034befd7192305ebcbf30ac0f7fdc41963c1c"
+    },
+    {
+      "path": "charts/xy004.masked.svg",
+      "sha256": "46825dc5fc42db371662d1e51263965448ebfe89642b3d3d632086d4646ab8ea"
+    },
+    {
+      "path": "charts/xy004.real.svg",
+      "sha256": "edde1d28ada25c33958168893cffaca2a04ae18e5320e448384ebf7c3ed4d7ff"
+    },
+    {
+      "path": "charts/xy005.masked.svg",
+      "sha256": "ef8e3cd975bfb61875a9823bbfb0de9a5574c3c0ac9d28291cb7838538770824"
+    },
+    {
+      "path": "charts/xy005.real.svg",
+      "sha256": "7fcc94503d4138d931d5e2bf2815048279c88f326df4d1799ff8192a29fbb5e3"
+    },
+    {
+      "path": "charts/xy006.masked.svg",
+      "sha256": "a79e877213f3c0c676d53ef5f1a670e5a0c6e99f05219039ade79d009b34affb"
+    },
+    {
+      "path": "charts/xy006.real.svg",
+      "sha256": "6659cdd7fc861ae485dbee6c7e69ab3d75c52562c0dc0e41ffdd203b2628184d"
+    },
+    {
+      "path": "charts/xy007.masked.svg",
+      "sha256": "88a4d628b1d5db92ad6e9548f61b0e0f1aeddd1518d2ef885acd22eb78228a40"
+    },
+    {
+      "path": "charts/xy007.real.svg",
+      "sha256": "10d2478992efe6ae5e9fc888480dce4de10c894a36bde5002e0cb66971a39e70"
+    },
+    {
+      "path": "charts/xy008.masked.svg",
+      "sha256": "acd61617de7865588ae0d70f915f8deb35efede1f96287f2213f56d55fb96acb"
+    },
+    {
+      "path": "charts/xy008.real.svg",
+      "sha256": "aa9c9366f32418caadf567ce53d4307754861c0a77a2c3711a55d50a1997350b"
+    },
+    {
+      "path": "charts/xy009.masked.svg",
+      "sha256": "a4745dd0908e42ebced40cf8b8626e37a130924a39caded34bc8dae0f886d37a"
+    },
+    {
+      "path": "charts/xy009.real.svg",
+      "sha256": "75b339305bcf946b5b43e61caf0560d08825fe93b597744709ff5f3466942b59"
+    },
+    {
+      "path": "charts/xy010.masked.svg",
+      "sha256": "429db33215667acafc11dccdcd7c1daad0fa1febd13a7a3dbea6977c858c4da3"
+    },
+    {
+      "path": "charts/xy010.real.svg",
+      "sha256": "0f39282a8fbb0885591683245fafadd79319b3d1c054468a2b3910b32cea6567"
+    },
+    {
+      "path": "charts/xy011.masked.svg",
+      "sha256": "ede7a9dfbab7e7073006c012bab12324bfba6f881384dc7b30b168e431184580"
+    },
+    {
+      "path": "charts/xy011.real.svg",
+      "sha256": "23423a5f8abc3c8a433cbb6a288e9de7c500fdb35ca76a61a41007839cc1067e"
+    },
+    {
+      "path": "charts/xy012.masked.svg",
+      "sha256": "dae864b299376aeb9beedd8845a4184bfc711180889a959fcf110983e276972e"
+    },
+    {
+      "path": "charts/xy012.real.svg",
+      "sha256": "9f29037e76e7e8c0f1ad9e023853a053b0de7bb46eac5e94d2a59fcf1328ee31"
+    },
+    {
+      "path": "charts/xy013.masked.svg",
+      "sha256": "2d7bd19c1c439f2c7c6664ad49fba50a7cd6d1680ea50a5a1312e7c804910322"
+    },
+    {
+      "path": "charts/xy013.real.svg",
+      "sha256": "c1581516e28fb4cf036802d655330c3f7b0b779d375516ca28372be651a81849"
+    },
+    {
+      "path": "charts/xy014.masked.svg",
+      "sha256": "1250df3233983502dca962b0a1ca4849412a952f44706c27a544615cd9e3ea59"
+    },
+    {
+      "path": "charts/xy014.real.svg",
+      "sha256": "996371d4808b216151b0ab3f7a89af8083a75f5656f95583242c173f38d64b83"
+    },
+    {
+      "path": "charts/xy015.masked.svg",
+      "sha256": "b7b7cc6d76f956dcb35a8f9891616fad7cea5c88e69e51dff5efe0eef5a43819"
+    },
+    {
+      "path": "charts/xy015.real.svg",
+      "sha256": "3c49209e14d71c8e017a1b5257ccf2ae8338b691a87aada126184bdc58073664"
+    },
+    {
+      "path": "charts/xy016.masked.svg",
+      "sha256": "f1a4a9bc9e4b4b276e49226ab43c3a3586c7859f5ed9d98ccb03c16d186e6d3d"
+    },
+    {
+      "path": "charts/xy016.real.svg",
+      "sha256": "4107648e44a3bab9649513dbcfa0f736e85db518e635a1571d574b3093abb5ac"
+    },
+    {
+      "path": "charts/xy017.masked.svg",
+      "sha256": "c234ccb45a386cfb2a88c9d60c31273ca675188bcdefc74b7aca151b51170084"
+    },
+    {
+      "path": "charts/xy017.real.svg",
+      "sha256": "dc1b30f08924a6e2449198b28ac39071bd77e7025fdcf3ca21fb65ae819047bd"
+    },
+    {
+      "path": "charts/xy018.masked.svg",
+      "sha256": "aaba55881252e1cc7f0a270fbffc5d6d219b1590175351b648d2972adb74c360"
+    },
+    {
+      "path": "charts/xy018.real.svg",
+      "sha256": "7ec554c37dd84df0f856230647b33b537c88511dd589145399592fc9556981f3"
+    },
+    {
+      "path": "charts/xy019.masked.svg",
+      "sha256": "8933a1d9649d5f1ff559ec06612bcd5a0278ce5bf7c2c153a6031d6d20c30043"
+    },
+    {
+      "path": "charts/xy019.real.svg",
+      "sha256": "f86340c17ac29ef15f57ae82066ffcc81bec21e41f495681c35782b87e5be49b"
+    },
+    {
+      "path": "charts/xy020.masked.svg",
+      "sha256": "9ad47a680da67bf927c8933a6964e52b34250dcf1c1be2995600eba3b6fb60e9"
+    },
+    {
+      "path": "charts/xy020.real.svg",
+      "sha256": "0e65a2d764334e5f94b53fd178776ea7ffd08ac3cbf8f70f57fadfa02e1fe20f"
+    },
+    {
+      "path": "charts/xy021.masked.svg",
+      "sha256": "ac683afb3dd68c61070ee35afa79759949817221a60965cda978c41f9cf04995"
+    },
+    {
+      "path": "charts/xy021.real.svg",
+      "sha256": "ef8027b20503a45ed15a965ab56f99d4611a68f1977898f5c395bc6d17643e14"
+    },
+    {
+      "path": "charts/xy022.masked.svg",
+      "sha256": "806510f59ca616ea9d100711317590d6c5565bcfdb167823397edda982ae0d22"
+    },
+    {
+      "path": "charts/xy022.real.svg",
+      "sha256": "273752fede0cc4d4940c096c33357f8ca9e5875455548593fb664d9fcb3c8ec8"
+    },
+    {
+      "path": "charts/xy023.masked.svg",
+      "sha256": "e668c2f4ac46e5133715830f654b1af8d63a013ecdb971978004de2723ffb5b8"
+    },
+    {
+      "path": "charts/xy023.real.svg",
+      "sha256": "2d994dee6c8a0e904235a17bf094bfbb1477302fa5a65020833dcaf06432f102"
+    },
+    {
+      "path": "charts/xy024.masked.svg",
+      "sha256": "0d6f355a21bcfe6847572f250badd05806a81b4d13897cf1612c68678b427cec"
+    },
+    {
+      "path": "charts/xy024.real.svg",
+      "sha256": "b19caecfe3cb7b7d4f9c5e642fecf0cd41fcac6196f645153877030fe816dc9c"
+    },
+    {
+      "path": "charts/xy025.masked.svg",
+      "sha256": "2204ae4dc7107aa72ef5d7437f7c1d4631b192b22e4c0535004de4a429b8122a"
+    },
+    {
+      "path": "charts/xy025.real.svg",
+      "sha256": "8250a7d7fe39eeb31c2140c851b94a5c5c7309e43b452e5819469ccec04e0e51"
+    },
+    {
+      "path": "charts/xy026.masked.svg",
+      "sha256": "2bc8526149496f5faa152bf684a9423e42cc965514705eb862a02f111e70dbf0"
+    },
+    {
+      "path": "charts/xy026.real.svg",
+      "sha256": "ce515929c2444997618f7e5586e72ae6f8308c3da90be0e813fa5d940389792e"
+    },
+    {
+      "path": "charts/xy027.masked.svg",
+      "sha256": "45cecc909f37351092b2688201855f8353afd58f4d0be1b32fc7129129a6a3c9"
+    },
+    {
+      "path": "charts/xy027.real.svg",
+      "sha256": "bcfe9bf0aae8491ab2c71084f005b011d27df3df0d3c3b7b7ddd66e2a5f7a106"
+    },
+    {
+      "path": "charts/xy028.masked.svg",
+      "sha256": "7ef0a386542364639cf09ec2de7df8bdd14435e331abb7533b3d18c8f5b4e6cf"
+    },
+    {
+      "path": "charts/xy028.real.svg",
+      "sha256": "fa0269bb2c44a912591513a2bee0eef000670c92b9eb508d660347d6b3f05c91"
+    },
+    {
+      "path": "charts/xy029.masked.svg",
+      "sha256": "df3345697b86cfd77cc000d8b6cd867402c9950646d1036d0f027003fbcf184c"
+    },
+    {
+      "path": "charts/xy029.real.svg",
+      "sha256": "cefc23ce7e8df48bb53478d17db6288c1acd83f7b21ede43bf2b440a68b099bc"
+    },
+    {
+      "path": "charts.jsonl",
+      "sha256": "efc08d25ebe33e9cc7bc70386966930c38e879f255d7738206aa5e3a6b3213d6"
+    },
+    {
+      "path": "rejections.json",
+      "sha256": "b8792371a3bcdd9c69c54af4cfd3e60c22ae8cc066fbfb69642be876f5ff874c"
+    }
+  ],
+  "generator_version": "1.0",
+  "n_cases": 180,
+  "n_charts": 30,
+  "permutation_seed": 4093,
+  "python_version": "3.11.2",
+  "variants": [
+    "masked",
+    "real"
+  ],
+  "xy_version": "0.0.7"
+}

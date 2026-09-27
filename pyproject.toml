@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fmtcontrol-xy"
+version = "0.1.0"
+description = "Independent, specification-only implementation of the format-matched control, and xybench: the SVG reference-resolution study on real XY charts"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+authors = [{ name = "monkeydluffyx183-beep" }]
+keywords = ["evaluation", "context-augmentation", "control", "permutation", "reproducibility"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Scientific/Engineering",
+    "Typing :: Typed",
+]
+# Deliberately empty: the package imports only the standard library (tests/test_stdlib_only.py).
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+# Corpus generation only (build / verify --regenerate). Pinned: the corpus is a function of
+# XY's exact SVG serialisation, and the manifest records the version it was built with.
+# XY requires Python >= 3.11; evaluate / report / audit work without it on 3.9+.
+bench = ["xy==0.0.7"]
+
+[project.urls]
+Repository = "https://github.com/monkeydluffyx183-beep/svg-ambiguity-xy"
+Specification = "https://github.com/NITISH-R-G/svg-ambiguity-bench/blob/master/src/fmtcontrol/SPEC.md"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+fmtcontrol_xy = ["conformance_vectors.json", "py.typed"]
+xybench = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

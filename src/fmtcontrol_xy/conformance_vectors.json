@@ -1,0 +1,404 @@
+{
+  "spec_version": "1.0",
+  "fmtcontrol_version": "0.1.0",
+  "algorithm": {
+    "digest": "SHA-256 of the UTF-8 bytes of f'{seed}:{key}'",
+    "rng_seed": "big-endian integer from the first 8 bytes of that digest",
+    "rng": "Mersenne Twister MT19937, as CPython random.Random",
+    "shuffle": "CPython random.shuffle: Fisher-Yates descending, j = _randbelow(i + 1)",
+    "displacement": "reshuffle until at least one position differs by value; max 64 attempts",
+    "note": "Level 2 conformance requires bit-exact reproduction of this pipeline. See SPEC.md for why the RNG is pinned to MT19937 and why that is a known wart rather than a design choice."
+  },
+  "vectors": [
+    {
+      "id": "basic-3",
+      "why": "smallest case with a meaningful permutation",
+      "seed": 991,
+      "key": "item-1",
+      "entities": [
+        "a",
+        "b",
+        "c"
+      ],
+      "values": [
+        1,
+        2,
+        3
+      ],
+      "expected_permuted_values": [
+        2,
+        3,
+        1
+      ]
+    },
+    {
+      "id": "k4-tuples",
+      "why": "K=4, tuple-valued facts - the benchmark's minimum ambiguity set",
+      "seed": 991,
+      "key": "svg_029f05e8",
+      "entities": [
+        "e1",
+        "e2",
+        "e3",
+        "e4"
+      ],
+      "values": [
+        [
+          184.8,
+          207.7,
+          17506
+        ],
+        [
+          77.7,
+          297.4,
+          972
+        ],
+        [
+          186.5,
+          411.8,
+          10993
+        ],
+        [
+          426.6,
+          292.5,
+          6306
+        ]
+      ],
+      "expected_permuted_values": [
+        [
+          426.6,
+          292.5,
+          6306
+        ],
+        [
+          186.5,
+          411.8,
+          10993
+        ],
+        [
+          184.8,
+          207.7,
+          17506
+        ],
+        [
+          77.7,
+          297.4,
+          972
+        ]
+      ]
+    },
+    {
+      "id": "k7-tuples",
+      "why": "K=7, the benchmark's maximum ambiguity set",
+      "seed": 991,
+      "key": "svg_1b314fd2",
+      "entities": [
+        "e0",
+        "e1",
+        "e2",
+        "e3",
+        "e4",
+        "e5",
+        "e6"
+      ],
+      "values": [
+        [
+          0.0,
+          0.0,
+          0
+        ],
+        [
+          11.5,
+          7.25,
+          1000
+        ],
+        [
+          23.0,
+          14.5,
+          2000
+        ],
+        [
+          34.5,
+          21.75,
+          3000
+        ],
+        [
+          46.0,
+          29.0,
+          4000
+        ],
+        [
+          57.5,
+          36.25,
+          5000
+        ],
+        [
+          69.0,
+          43.5,
+          6000
+        ]
+      ],
+      "expected_permuted_values": [
+        [
+          46.0,
+          29.0,
+          4000
+        ],
+        [
+          57.5,
+          36.25,
+          5000
+        ],
+        [
+          11.5,
+          7.25,
+          1000
+        ],
+        [
+          0.0,
+          0.0,
+          0
+        ],
+        [
+          69.0,
+          43.5,
+          6000
+        ],
+        [
+          23.0,
+          14.5,
+          2000
+        ],
+        [
+          34.5,
+          21.75,
+          3000
+        ]
+      ]
+    },
+    {
+      "id": "same-key-different-seed",
+      "why": "seed must change the permutation; it is not decorative",
+      "seed": 12345,
+      "key": "item-1",
+      "entities": [
+        "a",
+        "b",
+        "c"
+      ],
+      "values": [
+        1,
+        2,
+        3
+      ],
+      "expected_permuted_values": [
+        3,
+        1,
+        2
+      ]
+    },
+    {
+      "id": "same-seed-different-key",
+      "why": "key must change the permutation, so items do not share one shuffle",
+      "seed": 991,
+      "key": "item-2",
+      "entities": [
+        "a",
+        "b",
+        "c"
+      ],
+      "values": [
+        1,
+        2,
+        3
+      ],
+      "expected_permuted_values": [
+        2,
+        1,
+        3
+      ]
+    },
+    {
+      "id": "partial-ties",
+      "why": "equal values must not break determinism or the displacement check",
+      "seed": 991,
+      "key": "ties",
+      "entities": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "values": [
+        5,
+        5,
+        9,
+        1
+      ],
+      "expected_permuted_values": [
+        5,
+        5,
+        1,
+        9
+      ]
+    },
+    {
+      "id": "strings",
+      "why": "values are moved wholesale, so their type is unconstrained",
+      "seed": 7,
+      "key": "docs",
+      "entities": [
+        "doc_1",
+        "doc_2",
+        "doc_3"
+      ],
+      "values": [
+        "Paris",
+        "Berlin",
+        "Rome"
+      ],
+      "expected_permuted_values": [
+        "Rome",
+        "Berlin",
+        "Paris"
+      ]
+    },
+    {
+      "id": "unicode-key",
+      "why": "the key is hashed as UTF-8; a locale-dependent encoding would diverge here",
+      "seed": 42,
+      "key": "\u0437\u0430\u043f\u0440\u043e\u0441-42",
+      "entities": [
+        "x",
+        "y",
+        "z"
+      ],
+      "values": [
+        10,
+        20,
+        30
+      ],
+      "expected_permuted_values": [
+        30,
+        20,
+        10
+      ]
+    },
+    {
+      "id": "negatives-and-floats",
+      "why": "no assumption that values are positive or integral",
+      "seed": 3,
+      "key": "mixed",
+      "entities": [
+        "p",
+        "q",
+        "r",
+        "s"
+      ],
+      "values": [
+        -1.5,
+        0.0,
+        2.25,
+        -99.75
+      ],
+      "expected_permuted_values": [
+        2.25,
+        -1.5,
+        0.0,
+        -99.75
+      ]
+    },
+    {
+      "id": "large-16",
+      "why": "beyond the benchmark's range, to pin behaviour a reimplementer may extrapolate",
+      "seed": 991,
+      "key": "wide",
+      "entities": [
+        "n00",
+        "n01",
+        "n02",
+        "n03",
+        "n04",
+        "n05",
+        "n06",
+        "n07",
+        "n08",
+        "n09",
+        "n10",
+        "n11",
+        "n12",
+        "n13",
+        "n14",
+        "n15"
+      ],
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "expected_permuted_values": [
+        0,
+        2,
+        1,
+        10,
+        15,
+        3,
+        13,
+        5,
+        7,
+        12,
+        8,
+        9,
+        14,
+        11,
+        6,
+        4
+      ]
+    }
+  ],
+  "must_raise": [
+    {
+      "id": "single-entity",
+      "why": "one row has no format-matched control; returning it unchanged would be invalid",
+      "seed": 1,
+      "key": "k",
+      "entities": [
+        "only"
+      ],
+      "error": "fewer than two entities",
+      "values": [
+        1
+      ]
+    },
+    {
+      "id": "all-values-equal",
+      "why": "no permutation displaces anything, so the control would equal the treatment",
+      "seed": 1,
+      "key": "k",
+      "entities": [
+        "a",
+        "b",
+        "c"
+      ],
+      "error": "no displacing permutation",
+      "values": [
+        5,
+        5,
+        5
+      ]
+    }
+  ]
+}

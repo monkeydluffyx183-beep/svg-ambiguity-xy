@@ -1,0 +1,25 @@
+PASS  integrity certificate                                                       
+PASS  charts: K in range, ids unique, files match records                         
+PASS  cases: ground truth recomputes with margin                                  
+PASS  cases per chart                                                             {6: 30}
+PASS  instruction lint: no ids, tokens, coordinates or fills                      
+PASS  masked variant: every marker coordinate is an opaque token; unmask == real  
+PASS  permuted arm passes check_control on every chart                            token deltas: [0]
+PASS  arms differ only in the context slot; tokens verbatim in prompts            
+PASS  target position: 'first marker' policy scores near the uniform reference    share of targets at index 0 = 0.244, reference mean(1/K) = 0.194, distribution {0: 44, 1: 34, 2: 35, 3: 37, 4: 15, 5: 10, 6: 5}
+PASS  masked: oracle -> CORRECT_STRICT on all cases                               outcomes {'CORRECT_STRICT': 180}, identification 1.000
+PASS  masked: random identification ≈ reference                                   0.161 vs 0.194, outcomes {'WRONG_TARGET': 151, 'CORRECT_STRICT': 29}
+PASS  masked: first identification ≈ reference                                    0.244 vs 0.194, outcomes {'WRONG_TARGET': 136, 'CORRECT_STRICT': 44}
+PASS  masked: echo -> NO_EDIT on all cases                                        outcomes {'NO_EDIT': 180}, identification 0.000
+PASS  masked: abstain -> ABSTAINED on all cases                                   outcomes {'ABSTAINED': 180}, identification 0.000
+PASS  masked: prose -> REFUSED_PROSE on all cases                                 outcomes {'REFUSED_PROSE': 180}, identification 0.000
+PASS  masked: truncated -> MALFORMED on all cases                                 outcomes {'MALFORMED': 180}, identification 0.000
+PASS  real: oracle -> CORRECT_STRICT on all cases                                 outcomes {'CORRECT_STRICT': 180}, identification 1.000
+PASS  real: random identification ≈ reference                                     0.161 vs 0.194, outcomes {'WRONG_TARGET': 151, 'CORRECT_STRICT': 29}
+PASS  real: first identification ≈ reference                                      0.244 vs 0.194, outcomes {'WRONG_TARGET': 136, 'CORRECT_STRICT': 44}
+PASS  real: echo -> NO_EDIT on all cases                                          outcomes {'NO_EDIT': 180}, identification 0.000
+PASS  real: abstain -> ABSTAINED on all cases                                     outcomes {'ABSTAINED': 180}, identification 0.000
+PASS  real: prose -> REFUSED_PROSE on all cases                                   outcomes {'REFUSED_PROSE': 180}, identification 0.000
+PASS  real: truncated -> MALFORMED on all cases                                   outcomes {'MALFORMED': 180}, identification 0.000
+
+23/23 checks passed
